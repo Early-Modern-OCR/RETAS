@@ -43,14 +43,15 @@ USAGE: RecursiveAligmentTool <refFilename> <candFilename> <outputFilename> -opt 
 The screen output format is:
         <refFilename> <candFilename> <OCR_accuracy>
 
-Example command: java RecursiveAlignmentTool texts/adventuresofhuck_ground_truth.txt texts/adventuresofhuck00clemrich_OCR_output.txt texts/alignmentOutput.txt -opt config.txt
+Example command: 
+
+    java RecursiveAlignmentTool texts/adventuresofhuck_ground_truth.txt texts/adventuresofhuck00clemrich_OCR_output.txt texts/alignmentOutput.txt -opt config.txt
 		
 An example configuration file includes the three lines below:
-------------------------------
-level=CHAR
-alignmentFormat=LINES
-ignoredChars=,.'";:!?()[]{}<>`-+=/\$@%#|&^*_~
-------------------------------
+
+    level=CHAR
+    alignmentFormat=LINES
+    ignoredChars=,.'";:!?()[]{}<>`-+=/\$@%#|&^*_~
 
 
 2 - RETAS JAVA API
@@ -70,30 +71,30 @@ It does not produce any text output
 This function produces the alignment at the word or character level and produces a text output file. 
 The output file has two formats. One can also choose the characters to be ignored for the alignment. 
 
-Stats st = RecursiveAlignmentTool.processSingleJob(
-            gtFile,    // (String) input text 1: ground truth text
-            candFile,  // (String) input text 2: OCR output text
-            alignmentLevel,  // (String) The level of alignment: 'c' for the character and 'w' for the the word level alignment.
-            outputFormat,    // (String) The format of the alignment output: 'column' or 'line' 
-            ignoredChars, // (String) The list of characters to be ignored
-            alignFile     //  (String) The filename for the alignment output
-            );  		
+	Stats st = RecursiveAlignmentTool.processSingleJob(
+	            gtFile,    // (String) input text 1: ground truth text
+	            candFile,  // (String) input text 2: OCR output text
+	            alignmentLevel,  // (String) The level of alignment: 'c' for the character and 'w' for the the word level alignment.
+	            outputFormat,    // (String) The format of the alignment output: 'column' or 'line' 
+	            ignoredChars, // (String) The list of characters to be ignored
+	            alignFile     //  (String) The filename for the alignment output
+	            );  		
 
 "Stats" object contains the total number of matching characters/words and the total number of chars/words in the input texts. 
 OCR accuracy is defined to be the total number of matching chars/words divided by the total number of chars/words in the ground truth file. 
 One can calculate OCR accuracy by calling the getOCRaccuracy() method as:
 
-double ocrAccuracy = st.getOCRaccuracy();  
+	double ocrAccuracy = st.getOCRaccuracy();  
  
 2.c)  
 
 If the number of matching chars/words is the only concern, then this method is faster. 
 
-Stats sts[] = RecursiveAlignmentTool.processSingleJob_getAlignmentStatsOnly(
-            gtFile,    // (String) input text 1: ground truth text
-            candFile,  // (String) input text 2: OCR output text
-            ignoredChars, // (String) The list of characters to be ignored
-			);
+	Stats sts[] = RecursiveAlignmentTool.processSingleJob_getAlignmentStatsOnly(
+	            gtFile,    // (String) input text 1: ground truth text
+	            candFile,  // (String) input text 2: OCR output text
+	            ignoredChars, // (String) The list of characters to be ignored
+				);
 			
 sts[0] contains the word level alignment statistics
 sts[1] contains the character level alignment statistics
